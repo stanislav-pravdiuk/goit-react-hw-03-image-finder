@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import css from './image-gallery.module.css';
-import { BASE_URL, API_KEY } from "./api";
 import ImageGalleryItem from "./imageGalleryItem";
 import Loader from "../loader/Loader";
-
+import pixAPI from '../../services/pixApi'
 
 class ImageGallery extends Component {
     state = {
@@ -17,15 +16,10 @@ class ImageGallery extends Component {
         const nextSearchQuery = this.props.searchQuery;
 
         if (prevSearchQuery !== nextSearchQuery) {
-
+            
             this.setState({ status: 'pending' })
-            fetch(`${BASE_URL}?key=${API_KEY}&q=${nextSearchQuery}&image_type=photo&orientation=horizontal&per_page=12`)
-                .then(response => {
-                    if (response.ok) {
-                        return response.json()
-                    }
-                    return Promise.reject(new Error('WTF?!'))
-                })
+            pixAPI
+                .fetchPix(nextSearchQuery)
                 .then(response => this.setState({ response, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }

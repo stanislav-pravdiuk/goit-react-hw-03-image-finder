@@ -1,14 +1,14 @@
 import css from './image-gallery.module.css';
 
-function ImageGalleryItem({ pix }) {
+function ImageGalleryItem({ pix: { id, webformatURL, tags } }) {
     return (
         <li
-            key={pix.id}
+            key={id}
             className={css.imageGallery__item}>
             <img
                 className={css.imageGalleryItem__image}
-                src={pix.webformatURL}
-                alt={pix.tags} />
+                src={webformatURL}
+                alt={tags} />
         </li>
     )
 };
