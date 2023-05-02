@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-// import { API_KEY, BASE_URL } from "./api";
+import ImageGallery from './imageGallery/ImageGallery';
 import Searchbar from "./searchbar/Searchbar";
+import css from './app.module.css'
 
 class App extends Component {
   state = {
@@ -14,19 +15,10 @@ class App extends Component {
 
   render() {
     return (
-    <div
-      // style={{
-      //   height: '100vh',
-      //   display: 'flex',
-      //   justifyContent: 'center',
-      //   alignItems: 'center',
-      //   fontSize: 40,
-      //   color: '#010101'
-      // }}
+    <div className={css.app}
       >
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {/* <ImageGallery> */}
-        {/* <ImageGalleryItem> */}
+        <ImageGallery searchQuery={this.state.searchQuery} />
         {/* <Loader> */}
         {/* <Button> */}
         {/* <Modal> */}
