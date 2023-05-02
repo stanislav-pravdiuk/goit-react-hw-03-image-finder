@@ -3,9 +3,15 @@ import React, { Component } from "react";
 import Searchbar from "./searchbar/Searchbar";
 
 class App extends Component {
+  state = {
+    searchQuery: '',
+  };
+  
   handleFormSubmit = searchQuery => {
-    console.log(searchQuery)
-  }
+    this.setState({ searchQuery })
+  };
+
+
   render() {
     return (
     <div
