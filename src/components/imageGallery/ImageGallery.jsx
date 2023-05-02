@@ -3,10 +3,16 @@ import css from './image-gallery.module.css';
 import { BASE_URL, API_KEY } from "./api";
 import ImageGalleryItem from "./imageGalleryItem";
 
+// 'idle'
+// 'pending'
+// 'resolved'
+// 'rejected'
+
 class ImageGallery extends Component {
     state = {
         response: '',
-        loading: false,
+        error: null,
+        status: 'idle',
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -15,24 +21,40 @@ class ImageGallery extends Component {
 
         if (prevSearchQuery !== nextSearchQuery) {
 
-            this.setState({ loading: true})
+            this.setState({ status: 'pending' })
             fetch(`${BASE_URL}?key=${API_KEY}&q=${nextSearchQuery}&image_type=photo&orientation=horizontal&per_page=12`)
-                .then(res => res.json())
-                .then(response => this.setState({ response }))
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    return Promise.reject(new Error('WTF?!'))
+                })
+                .then(response => this.setState({ response, status: 'resolved' }))
+                .catch(error=>this.setState({error, status: 'rejected'}))
                 .finally(() => this.setState({ loading: false }));
         }
     }
     render() {
-        const { response, loading } = this.state;
+        const { response, error, status } = this.state;
 
-        return (
-            <ul className={css.imageGallery}>
-                {loading && <div>Загрузка...</div>}
-                {response && <ul>{response.hits.map(pix =>
-                    <ImageGalleryItem pix={pix} />
-                    )}</ul>}
-            </ul>
-        )
+        if (status === 'idle') {
+            return <h1>введи поисковой запрос</h1>
+        }
+
+        if (status === 'pending') {
+            return <div>Загрузка...</div>
+        }
+
+        if (status === 'rejected') {
+            return <h1>{error.message}</h1>
+        }
+
+        if (status === 'resolved')
+            return  <ul className={css.imageGallery}>
+                        {response.hits.map(pix =>
+                        <ImageGalleryItem pix={pix} />
+                        )}
+                    </ul>
     }
 };
 
