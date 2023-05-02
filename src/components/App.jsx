@@ -17,9 +17,12 @@ class App extends Component {
     return (
     <div className={css.app}
       >
-        <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery searchQuery={this.state.searchQuery} />
-        {/* <Loader> */}
+        <Searchbar
+          onSubmit={this.handleFormSubmit}
+        />
+        <ImageGallery
+          searchQuery={this.state.searchQuery}
+        />
         {/* <Button> */}
         {/* <Modal> */}
     </div>
