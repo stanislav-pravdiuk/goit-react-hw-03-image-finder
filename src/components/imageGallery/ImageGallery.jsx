@@ -9,21 +9,28 @@ class ImageGallery extends Component {
         response: '',
         error: null,
         status: null,
+        showModal: false,
     }
 
     componentDidUpdate(prevProps, prevState) {
         const prevSearchQuery = prevProps.searchQuery;
         const nextSearchQuery = this.props.searchQuery;
-
+        
         if (prevSearchQuery !== nextSearchQuery) {
             
-            this.setState({ status: 'pending' })
+            this.setState({ status: 'pending' });
             pixAPI
                 .fetchPix(nextSearchQuery)
                 .then(response => this.setState({ response, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
-        }
-    }
+            
+        } 
+    };
+
+    toggleModal = () => {
+        this.setState(({ showModal }) => ({ showModal: !showModal }))
+    };
+
     render() {
         const { response, error, status } = this.state;
 
@@ -38,7 +45,10 @@ class ImageGallery extends Component {
         if (status === 'resolved')
             return  <ul className={css.imageGallery}>
                         {response.hits.map(pix =>
-                        <ImageGalleryItem pix={pix} />
+                            <ImageGalleryItem
+                                onClick={this.toggleModal}
+                                key={pix.id}
+                                pix={pix} />
                         )}
                     </ul>
         };

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ImageGallery from './imageGallery/ImageGallery';
 import Searchbar from "./searchbar/Searchbar";
-import css from './app.module.css'
+import css from './app.module.css';
+import Modal from "./modal/Modal";
 
 class App extends Component {
   state = {
@@ -12,7 +13,6 @@ class App extends Component {
     this.setState({ searchQuery })
   };
 
-
   render() {
     return (
     <div className={css.app}
@@ -22,9 +22,11 @@ class App extends Component {
         />
         <ImageGallery
           searchQuery={this.state.searchQuery}
+          onHandleResponse={this.handleResponse}
         />
         {/* <Button> */}
-        {/* <Modal> */}
+        {this.state.showModal && <Modal />}
+        {/* <Modal /> */}
     </div>
   );
   }

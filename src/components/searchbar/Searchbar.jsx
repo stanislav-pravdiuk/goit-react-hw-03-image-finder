@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import css from './searchbar.module.css'
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 class Searchbar extends Component{
     state = {
@@ -14,7 +15,7 @@ class Searchbar extends Component{
         event.preventDefault();
 
         if (this.state.searchQuery.trim() === '') {
-            alert('WTF?');
+            Notify.failure('WTF???');
             return;
         }
 
