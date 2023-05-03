@@ -9,7 +9,6 @@ class ImageGallery extends Component {
         response: '',
         error: null,
         status: null,
-        showModal: false,
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -27,10 +26,6 @@ class ImageGallery extends Component {
         } 
     };
 
-    toggleModal = () => {
-        this.setState(({ showModal }) => ({ showModal: !showModal }))
-    };
-
     render() {
         const { response, error, status } = this.state;
 
@@ -46,7 +41,7 @@ class ImageGallery extends Component {
             return  <ul className={css.imageGallery}>
                         {response.hits.map(pix =>
                             <ImageGalleryItem
-                                onClick={this.toggleModal}
+                                toggleModal={this.props.toggleModal}
                                 key={pix.id}
                                 pix={pix} />
                         )}

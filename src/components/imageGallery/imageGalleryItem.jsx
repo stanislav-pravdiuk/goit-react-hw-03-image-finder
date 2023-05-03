@@ -1,14 +1,15 @@
 import css from './image-gallery.module.css';
 
-function ImageGalleryItem({ pix: { webformatURL, tags }, onClick }) {
+function ImageGalleryItem({ pix: { webformatURL, tags }, toggleModal }) {
     return (
         <li
             className={css.imageGallery__item}>
-            <button type="button" onClick={()=>onClick}></button> 
             <img
+                onClick={toggleModal}
                 className={css.imageGalleryItem__image}
                 src={webformatURL}
-                    alt={tags} />
+                alt={tags}
+            />
         </li>
     )
 };
