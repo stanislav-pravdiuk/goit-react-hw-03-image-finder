@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import css from './image-gallery.module.css';
 import ImageGalleryItem from "./imageGalleryItem";
 import Loader from "../loader/Loader";
-import pixAPI from '../../services/pixApi'
+import pixAPI from '../../services/pixApi';
+import Button from '../button/Button';
+import Modal from '../modal/Modal';
 
 class ImageGallery extends Component {
     state = {
         response: '',
         error: null,
         status: null,
+        showModal: false,
+        id: '',
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -23,7 +27,12 @@ class ImageGallery extends Component {
                 .then(response => this.setState({ response, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }
-        this.props.onResponse(this.state.response)
+    };
+
+    toggleModal = () => {
+    this.setState(state => ({
+        showModal: !state.showModal,
+        }))
     };
 
     render() {
@@ -38,14 +47,24 @@ class ImageGallery extends Component {
         };
 
         if (status === 'resolved')
-            return  <ul className={css.imageGallery}>
-                        {response.hits.map(pix =>
-                            <ImageGalleryItem
-                                toggleModal={this.props.toggleModal}
-                                key={pix.id}
-                                pix={pix} />
-                        )}
-                    </ul>
+            return <div>
+                        <ul className={css.imageGallery}>
+                            {response.hits.map(pix =>
+                                <ImageGalleryItem
+                                    toggleModal={this.toggleModal}
+                                    key={pix.id}
+                                    pix={pix}
+                                />
+                                )}
+                        </ul>
+                        <Button onClick={this.toggleModal}>More</Button>
+                        {this.state.showModal &&
+                            <Modal onClose={this.toggleModal}>
+                                <img src={response.hits[0].webformatURL} alt="" />
+                            </Modal>}
+                    </div>
+                
+        
         };
 };
 

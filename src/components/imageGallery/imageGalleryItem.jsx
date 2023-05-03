@@ -1,4 +1,5 @@
 import css from './image-gallery.module.css';
+// import Modal from 'components/modal/Modal';
 
 function ImageGalleryItem({ pix: { webformatURL, tags }, toggleModal }) {
     return (
