@@ -3,16 +3,24 @@ import ImageGallery from './imageGallery/ImageGallery';
 import Searchbar from "./searchbar/Searchbar";
 import css from './app.module.css';
 import Modal from "./modal/Modal";
+import Button from "./button/Button";
 
 class App extends Component {
   state = {
     searchQuery: '',
     showModal: false,
+    response: '',
   };
   
   handleFormSubmit = searchQuery => {
     this.setState({ searchQuery })
   };
+
+  handleGetResponse = resp => {
+    // this.setState({ response: resp,})
+    console.log(resp)
+    // console.log(this.state.response)
+  }
 
   toggleModal = () => {
     this.setState(state => ({
@@ -30,8 +38,9 @@ class App extends Component {
         <ImageGallery
           searchQuery={this.state.searchQuery}
           toggleModal={this.toggleModal}
+          onResponse={this.handleGetResponse}
         />
-        {/* <Button> */}
+        <Button onClick={this.toggleModal}>More</Button>
 
         {this.state.showModal &&
           <Modal onClose={this.toggleModal}>

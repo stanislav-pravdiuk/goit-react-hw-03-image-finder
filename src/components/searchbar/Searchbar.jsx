@@ -17,7 +17,7 @@ class Searchbar extends Component{
         if (this.state.searchQuery.trim() === '') {
             Notify.failure('WTF???');
             return;
-        }
+        };
 
         this.props.onSubmit(this.state.searchQuery);
         this.setState({ searchQuery: '' });

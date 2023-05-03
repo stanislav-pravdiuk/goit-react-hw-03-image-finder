@@ -22,8 +22,8 @@ class ImageGallery extends Component {
                 .fetchPix(nextSearchQuery)
                 .then(response => this.setState({ response, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
-            
-        } 
+        }
+        this.props.onResponse(this.state.response)
     };
 
     render() {
