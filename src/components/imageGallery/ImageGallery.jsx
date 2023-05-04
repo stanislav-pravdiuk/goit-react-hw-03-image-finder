@@ -26,7 +26,7 @@ class ImageGallery extends Component {
             this.setState({ status: 'pending' });
             pixAPI
                 .fetchPix(nextSearchQuery, page)
-                .then(response => this.setState({ response, status: 'resolved' }))
+                .then(response => this.setState({ response: response.hits, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }
     };
