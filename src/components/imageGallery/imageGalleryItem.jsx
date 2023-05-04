@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 class ImageGalleryItem extends Component {
 
     onClick = () => {
-        this.props.onGetModalImg(this.props.pix.largeImageURL);
+        this.props.onGetModalImg(this.props.pix.largeImageURL, this.props.pix.tags);
         this.props.toggleModal();
     };
 

@@ -13,6 +13,7 @@ class ImageGallery extends Component {
         status: null,
         showModal: false,
         modalImg: '',
+        alt:'',
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -35,9 +36,10 @@ class ImageGallery extends Component {
         })); 
     };
 
-    getModalImg = (modalImg) => {
+    getModalImg = (modalImg, alt) => {
         this.setState(({
-            modalImg
+            modalImg,
+            alt,
         }))
     }
 
@@ -67,7 +69,7 @@ class ImageGallery extends Component {
                         <Button onClick={this.toggleModal}>More</Button>
                         {this.state.showModal &&
                             <Modal onClose={this.toggleModal}>
-                                <img src={this.state.modalImg} alt="" />
+                                <img src={this.state.modalImg} alt={this.state.alt} />
                             </Modal>}
                     </div>
                 
