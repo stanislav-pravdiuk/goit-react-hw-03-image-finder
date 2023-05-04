@@ -1,5 +1,6 @@
 import css from './image-gallery.module.css';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ImageGalleryItem extends Component {
 
@@ -21,6 +22,12 @@ class ImageGalleryItem extends Component {
         </li>
     )
     }
+};
+
+ImageGalleryItem.propTypes = {
+    pix: PropTypes.object.isRequired,
+    toggleModal: PropTypes.func.isRequired,
+    onGetModalImg: PropTypes.func.isRequired
 };
 
 export default ImageGalleryItem;

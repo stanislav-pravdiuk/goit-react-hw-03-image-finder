@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import css from './searchbar.module.css'
+import css from './searchbar.module.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import PropTypes from 'prop-types';
 
 class Searchbar extends Component{
     state = {
@@ -44,6 +45,10 @@ class Searchbar extends Component{
             </header>
         )
     }
+};
+
+Searchbar.propTypes = {
+    onsubmit: PropTypes.func
 };
 
 export default Searchbar;

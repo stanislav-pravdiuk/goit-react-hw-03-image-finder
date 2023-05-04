@@ -5,6 +5,7 @@ import Loader from "../loader/Loader";
 import pixAPI from '../../services/pixApi';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
+import PropTypes from 'prop-types';
 
 class ImageGallery extends Component {
     state = {
@@ -45,16 +46,14 @@ class ImageGallery extends Component {
     };
 
     loadMore = () => {
-        // let page = 2;
-
         pixAPI
             .fetchPix(this.props.searchQuery, this.state.page)
             .then(nextResponse => this.setState(prevState => {
                 return {
                     response: [...prevState.response, ...nextResponse.hits],
-                    page: prevState.page += 1
+                    page: prevState + 1,
                 }
-            })                
+            })  
             )
             .catch(error => this.setState({ error, status: 'rejected' }));
     };
@@ -91,6 +90,10 @@ class ImageGallery extends Component {
                 
         
         };
+};
+
+ImageGallery.propTypes = {
+    searchQuery: PropTypes.string.isRequired
 };
 
 export default ImageGallery;
