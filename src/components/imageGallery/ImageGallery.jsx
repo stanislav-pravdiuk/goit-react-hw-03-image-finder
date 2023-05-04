@@ -13,19 +13,19 @@ class ImageGallery extends Component {
         status: null,
         showModal: false,
         modalImg: '',
-        alt:'',
+        alt: '',
+        page: 1,
     }
 
     componentDidUpdate(prevProps, prevState) {
         const prevSearchQuery = prevProps.searchQuery;
         const nextSearchQuery = this.props.searchQuery;
-        const page = 1;
 
         if (prevSearchQuery !== nextSearchQuery) {
             
             this.setState({ status: 'pending' });
             pixAPI
-                .fetchPix(nextSearchQuery, page)
+                .fetchPix(nextSearchQuery, this.state.page)
                 .then(response => this.setState({ response: response.hits, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }
@@ -45,11 +45,17 @@ class ImageGallery extends Component {
     };
 
     loadMore = () => {
-        const page = 2
-        // console.log(this.state.response.hits)
+        // let page = 2;
+
         pixAPI
-            .fetchPix(this.props.searchQuery, page)
-            .then(nextResponse => this.setState(prevState => console.log(nextResponse)))
+            .fetchPix(this.props.searchQuery, this.state.page)
+            .then(nextResponse => this.setState(prevState => {
+                return {
+                    response: [...prevState.response, ...nextResponse.hits],
+                    page: prevState.page += 1
+                }
+            })                
+            )
             .catch(error => this.setState({ error, status: 'rejected' }));
     };
 
@@ -67,7 +73,7 @@ class ImageGallery extends Component {
         if (status === 'resolved')
             return <div>
                         <ul className={css.imageGallery}>
-                            {response.hits.map(pix =>
+                            {response.map(pix =>
                                 <ImageGalleryItem
                                     onGetModalImg={this.getModalImg}
                                     toggleModal={this.toggleModal}
