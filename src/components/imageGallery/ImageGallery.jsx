@@ -12,7 +12,7 @@ class ImageGallery extends Component {
         error: null,
         status: null,
         showModal: false,
-        id: '',
+        modalImg: '',
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -30,10 +30,16 @@ class ImageGallery extends Component {
     };
 
     toggleModal = () => {
-    this.setState(state => ({
-        showModal: !state.showModal,
-        }))
+        this.setState(state => ({
+            showModal: !state.showModal,
+        })); 
     };
+
+    getModalImg = (modalImg) => {
+        this.setState(({
+            modalImg
+        }))
+    }
 
     render() {
         const { response, error, status } = this.state;
@@ -51,6 +57,7 @@ class ImageGallery extends Component {
                         <ul className={css.imageGallery}>
                             {response.hits.map(pix =>
                                 <ImageGalleryItem
+                                    onGetModalImg={this.getModalImg}
                                     toggleModal={this.toggleModal}
                                     key={pix.id}
                                     pix={pix}
@@ -60,7 +67,7 @@ class ImageGallery extends Component {
                         <Button onClick={this.toggleModal}>More</Button>
                         {this.state.showModal &&
                             <Modal onClose={this.toggleModal}>
-                                <img src={response.hits[0].webformatURL} alt="" />
+                                <img src={this.state.modalImg} alt="" />
                             </Modal>}
                     </div>
                 

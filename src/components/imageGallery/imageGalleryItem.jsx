@@ -1,18 +1,26 @@
 import css from './image-gallery.module.css';
-// import Modal from 'components/modal/Modal';
+import React, {Component} from 'react';
 
-function ImageGalleryItem({ pix: { webformatURL, tags }, toggleModal }) {
-    return (
+class ImageGalleryItem extends Component {
+
+    onClick = () => {
+        this.props.onGetModalImg(this.props.pix.largeImageURL);
+        this.props.toggleModal();
+    };
+
+    render() { 
+        return (
         <li
             className={css.imageGallery__item}>
             <img
-                onClick={toggleModal}
+                onClick={this.onClick}    
                 className={css.imageGalleryItem__image}
-                src={webformatURL}
-                alt={tags}
+                src={this.props.pix.webformatURL}
+                alt={this.props.pix.tags}
             />
         </li>
     )
+    }
 };
 
 export default ImageGalleryItem;
