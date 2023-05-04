@@ -51,7 +51,7 @@ class ImageGallery extends Component {
             .then(nextResponse => this.setState(prevState => {
                 return {
                     response: [...prevState.response, ...nextResponse.hits],
-                    page: prevState + 1,
+                    page: prevState.page + 1,
                 }
             })  
             )
@@ -81,10 +81,19 @@ class ImageGallery extends Component {
                                 />
                                 )}
                         </ul>
-                        <Button onClick={this.loadMore}>More</Button>
+                
+                        <Button
+                            onClick={this.loadMore}
+                                >More
+                        </Button>
+                
                         {this.state.showModal &&
-                            <Modal onClose={this.toggleModal}>
-                                <img src={this.state.modalImg} alt={this.state.alt} />
+                            <Modal
+                                onClose={this.toggleModal}>
+                                    <img
+                                        src={this.state.modalImg}
+                                        alt={this.state.alt}
+                                    />
                             </Modal>}
                     </div>
                 
