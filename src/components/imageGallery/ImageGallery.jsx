@@ -19,12 +19,13 @@ class ImageGallery extends Component {
     componentDidUpdate(prevProps, prevState) {
         const prevSearchQuery = prevProps.searchQuery;
         const nextSearchQuery = this.props.searchQuery;
-        
+        const page = 1;
+
         if (prevSearchQuery !== nextSearchQuery) {
             
             this.setState({ status: 'pending' });
             pixAPI
-                .fetchPix(nextSearchQuery)
+                .fetchPix(nextSearchQuery, page)
                 .then(response => this.setState({ response, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }
@@ -41,7 +42,16 @@ class ImageGallery extends Component {
             modalImg,
             alt,
         }))
-    }
+    };
+
+    loadMore = () => {
+        const page = 2
+        // console.log(this.state.response.hits)
+        pixAPI
+            .fetchPix(this.props.searchQuery, page)
+            .then(nextResponse => this.setState(prevState => console.log(nextResponse)))
+            .catch(error => this.setState({ error, status: 'rejected' }));
+    };
 
     render() {
         const { response, error, status } = this.state;
@@ -66,7 +76,7 @@ class ImageGallery extends Component {
                                 />
                                 )}
                         </ul>
-                        <Button onClick={this.toggleModal}>More</Button>
+                        <Button onClick={this.loadMore}>More</Button>
                         {this.state.showModal &&
                             <Modal onClose={this.toggleModal}>
                                 <img src={this.state.modalImg} alt={this.state.alt} />
