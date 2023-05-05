@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import css from './image-gallery.module.css';
 import ImageGalleryItem from "./imageGalleryItem";
 import Loader from "../loader/Loader";
-import pixAPI from '../../services/pixApi';
+import fetchPix from '../../services/pixApi';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import PropTypes from 'prop-types';
@@ -25,7 +25,7 @@ class ImageGallery extends Component {
         if (prevSearchQuery !== nextSearchQuery) {
             
             this.setState({ status: 'pending' });
-            pixAPI
+            fetchPix
                 .fetchPix(nextSearchQuery, this.state.page)
                 .then(response => this.setState({ response: response.hits, status: 'resolved' }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
@@ -46,7 +46,7 @@ class ImageGallery extends Component {
     };
 
     loadMore = () => {
-        pixAPI
+        fetchPix
             .fetchPix(this.props.searchQuery, this.state.page)
             .then(nextResponse => this.setState(prevState => {
                 return {
