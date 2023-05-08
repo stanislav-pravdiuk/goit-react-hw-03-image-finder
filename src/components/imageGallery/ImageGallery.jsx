@@ -38,10 +38,10 @@ class ImageGallery extends Component {
     };
 
     getModalImg = (modalImg, alt) => {
-        this.setState(({
+        this.setState({
             modalImg,
             alt,
-        }))
+        })
     };
 
     loadMore = () => {
