@@ -26,7 +26,13 @@ class ImageGallery extends Component {
             
             this.setState({ status: 'pending' });
             fetchPix(nextSearchQuery, this.state.page)
-                .then(response => this.setState({ response: response.hits, status: 'resolved' }))
+                .then(response => this.setState(prevState => {
+                    return {
+                        response: response.hits,
+                        status: 'resolved',
+                        page: prevState.page +1, 
+                    }
+                }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }
     };
@@ -60,7 +66,9 @@ class ImageGallery extends Component {
         const { response, error, status } = this.state;
 
         if (status === 'pending') {
-            return <Loader/>
+            return  <div className={css.box}>
+                        <Loader />
+                    </div>
         };
 
         if (status === 'rejected') {
@@ -80,10 +88,12 @@ class ImageGallery extends Component {
                                 )}
                         </ul>
                 
+                        <div className={css.box}>       
                         <Button
                             onClick={this.loadMore}
                                 >More
                         </Button>
+                        </div>
                 
                         {this.state.showModal &&
                             <Modal
