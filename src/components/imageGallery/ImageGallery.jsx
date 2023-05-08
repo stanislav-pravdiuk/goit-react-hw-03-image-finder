@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import css from './image-gallery.module.css';
 import ImageGalleryItem from "./imageGalleryItem";
 import Loader from "../loader/Loader";
-import fetchPix from '../../services/pixApi';
+import { fetchPix } from "services/pixApi";
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import PropTypes from 'prop-types';
