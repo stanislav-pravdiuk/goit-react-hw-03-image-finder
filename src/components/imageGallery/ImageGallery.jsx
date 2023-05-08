@@ -25,10 +25,8 @@ class ImageGallery extends Component {
         if (prevSearchQuery !== nextSearchQuery) {
             
             this.setState({ status: 'pending' });
-            // fetchPix
             fetchPix(nextSearchQuery, this.state.page)
                 .then(response => this.setState({ response: response.hits, status: 'resolved' }))
-                // .then(data =>  console.log(data))
                 .catch(error => this.setState({ error, status: 'rejected' }));
         }
     };
@@ -46,18 +44,17 @@ class ImageGallery extends Component {
         }))
     };
 
-    // loadMore = () => {
-    //     fetchPix
-    //         .fetchPix(this.props.searchQuery, this.state.page)
-    //         .then(nextResponse => this.setState(prevState => {
-    //             return {
-    //                 response: [...prevState.response, ...nextResponse.hits],
-    //                 page: prevState.page + 1,
-    //             }
-    //         })  
-    //         )
-    //         .catch(error => this.setState({ error, status: 'rejected' }));
-    // };
+    loadMore = () => {
+            fetchPix(this.props.searchQuery, this.state.page)
+            .then(nextResponse => this.setState(prevState => {
+                return {
+                    response: [...prevState.response, ...nextResponse.hits],
+                    page: prevState.page + 1,
+                }
+            })  
+            )
+            .catch(error => this.setState({ error, status: 'rejected' }));
+    };
 
     render() {
         const { response, error, status } = this.state;
