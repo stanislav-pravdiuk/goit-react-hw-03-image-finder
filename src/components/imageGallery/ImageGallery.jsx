@@ -25,7 +25,8 @@ class ImageGallery extends Component {
         if (prevSearchQuery !== nextSearchQuery) {
             
             this.setState({ status: 'pending' });
-            fetchPix(nextSearchQuery, this.state.page)
+            
+            fetchPix(nextSearchQuery, 1)
                 .then(response => this.setState(prevState => {
                     return {
                         response: response.hits,
@@ -34,7 +35,7 @@ class ImageGallery extends Component {
                     }
                 }))
                 .catch(error => this.setState({ error, status: 'rejected' }));
-        }
+        };
     };
 
     toggleModal = () => {
